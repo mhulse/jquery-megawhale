@@ -111,8 +111,8 @@
 				// Local variable(s):
 				//----------------------------------
 				
-				var $this = $(this),                                                          // Target object.
-				data      = $this.data(constants.NS),                                         // Namespace instance data.
+				var $this = $(this),                                                            // Target object.
+				data      = $this.data(constants.NS),                                           // Namespace instance data.
 				options   = $.extend({}, settings.external, $.fn[constants.NS].defaults, opts); // Merge settings, defaults and options.
 				
 				//----------------------------------
