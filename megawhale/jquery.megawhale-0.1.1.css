@@ -168,7 +168,7 @@
 	
 	.mw-div {
 		width: 968.1px; /* -2px for left/right borders. */
-		width: 968px\9; /* IE8 appears to round up. Feeding whole number width for IE<9. */
+		width: 968px\9; /* IE8 appears to round up. Feeding whole number width for IE <= 9 (rgne.ws/P4re4f). */
 	}
 	
 	/*
@@ -263,10 +263,12 @@
 */
 
 @media
-only screen and (min-width: 990px) and (-webkit-min-device-pixel-ratio: 1.5),
-only screen and (min-width: 990px) and (-o-min-device-pixel-ratio: 3/2),
 only screen and (min-width: 990px) and (min--moz-device-pixel-ratio: 1.5),
-only screen and (min-width: 990px) and (min-device-pixel-ratio: 1.5) {
+only screen and (min-width: 990px) and (-moz-min-device-pixel-ratio: 1.5),
+only screen and (min-width: 990px) and (-o-min-device-pixel-ratio: 3/2),
+only screen and (min-width: 990px) and (-webkit-min-device-pixel-ratio: 1.5),
+only screen and (min-width: 990px) and (min-device-pixel-ratio: 1.5),
+only screen and (min-width: 990px) and (min-resolution: 1.5dppx) {
 	
 	/*
 	**----------------------------------
