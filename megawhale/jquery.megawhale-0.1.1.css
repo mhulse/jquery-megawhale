@@ -36,7 +36,7 @@
 **--------------------------------------------------------------------------
 */
 
-@media only screen and (min-width: 990px) { /* 970px + 20px */
+@media only screen and (min-width: 1005px) {
 	
 	/*
 	**--------------------------------------------------------------------------
@@ -167,8 +167,8 @@
 	*/
 	
 	.mw-div {
-		width: 968.1px; /* -2px for left/right borders. */
-		width: 968px\9; /* IE8 appears to round up. Feeding whole number width for IE <= 9 (rgne.ws/P4re4f). */
+		width: 978.1px; /* -2px for left/right borders. */
+		width: 978px\9; /* IE8 appears to round up. Feeding whole number width for IE <= 9 (rgne.ws/P4re4f). */
 	}
 	
 	/*
@@ -226,7 +226,7 @@
 	
 }
 
-@media only screen and (min-width: 1320px) { /* 1300px + 20px */
+@media only screen and (min-width: 1345px) {
 	
 	/*
 	**--------------------------------------------------------------------------
@@ -245,10 +245,10 @@
 	/*
 		IBID.
 	*/
-	
+
 	.mw-div {
-		width: 1298.1px; /* IBID. */
-		width: 1298px\9; /* IBID. */
+		width: 1318.1px; /* IBID. */
+		width: 1318px\9; /* IBID. */
 	}
 	
 }
