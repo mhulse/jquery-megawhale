@@ -1,0 +1,314 @@
+/*!
+ * jQuery MegaWhale
+ * Like Superfish, but for mega menus!
+ *
+ * @author Micky Hulse
+ * @link http://hulse.me
+ * @docs https://github.com/registerguard/jquery-megawhale
+ * @copyright Copyright (c) 2013 Micky Hulse.
+ * @license Released under the Apache License, Version 2.0.
+ * @version 1.0.0
+ * @date 2013/02/11
+ */@charset "UTF-8";
+
+/*
+** 
+** CSS/HTML tested via:
+** 
+** MAC Snow Leopard:
+** Firefox 13.0.x, Safari 5.1.x, Opera 12.00, Chrome 20.0.x
+** 
+** PC Vista:
+** Firefox 3.6.x, Firefox 13.0.x, Chrome 20.0.x, Safari 5.1.x, Opera 12.00
+** IE 9.0.x, IE 8.0.x, IE 7.0.x
+** 
+** PC XP:
+** IE 6.0.x
+** 
+** iPhone 4:
+** Safari 4.3 (simulated), Safari 5.1.1, Chrome 19.0.x, Opera Mini 7.0.x (has refresh issues)
+** iPhone:
+** Safari 4.3 (simulated)
+** iPad:
+** Safari 4.3 (simulated), Safari 5.1.1
+** 
+** Galaxy Tab 10.1:
+** Browser 3.2
+** 
+** Last updated: 2012/07/14
+** 
+*/
+
+/*
+**--------------------------------------------------------------------------
+**
+** Media queries:
+**
+**--------------------------------------------------------------------------
+*/
+
+@media only screen and (min-width: 1005px) {
+	
+	/*
+	**--------------------------------------------------------------------------
+	**
+	** Globally remove tap highlight:
+	**
+	**--------------------------------------------------------------------------
+	*/
+	
+	html.mw-outside * { -webkit-tap-highlight-color: rgba(0, 0, 0, 0); } /* rgne.ws/LRzBkh */
+	
+	/*
+	**--------------------------------------------------------------------------
+	**
+	** Desktop menu:
+	**
+	**--------------------------------------------------------------------------
+	*/
+	
+	/*
+	**----------------------------------
+	** Menu structure:
+	**----------------------------------
+	*/
+	
+	.mw-ul,
+	.mw-li {
+		margin: 0;
+		padding: 0;
+	}
+	.mw-ul {
+		position: relative;
+		list-style: none;
+		float: left;
+		display: inline;
+		width: 100%;
+	}
+		.mw-li {
+			float: left;
+			display: inline;
+		}
+		.mw-li-orphan { float: right; }
+		.mw-li:hover { *visibility: inherit; }
+			.mw-a { display: block; }
+			.mw-div {
+				position: absolute;
+				left: -999em;
+			}
+				.mw-li:hover .mw-div,
+				.mw-open .mw-div {
+					top: auto;
+					left: 0;
+					z-index: 99;
+				}
+	
+	/*
+	**----------------------------------
+	** Menu skin:
+	**----------------------------------
+	*/
+	
+	.mw-ul { background-color: #000; }
+		.mw-li {}
+			.mw-a {
+				letter-spacing: .05em;
+				text-decoration: none;
+				line-height: 1;
+				border-width: 1px 1px 0;
+				border-style: solid;
+				border-color: #000;
+				background-color: #000;
+				padding: 10px 10px 11px; /* +1px on bottom to account for missing border. */
+				-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+			}
+			.mw-a-with-div {
+				padding-right: 20px; /* 10px on left to visually balance with arrow on right. */
+				position: relative; /* Needed for IMG arrows. */
+			}
+			.mw-a,
+			.mw-a:visited { color: #fff; }
+			/* See HTML for related JS: */
+			.no-touch .mw-a:visited:hover,
+			.no-touch .mw-a:focus,
+			.no-touch .mw-a:focus:hover,
+			.no-touch .mw-a:hover,
+			.no-touch .mw-a:active {
+				color: #fff;
+				text-decoration: none;
+				border-color: #ae1b1f;
+				background-color: #ae1b1f;
+				outline: 0;
+			}
+			.mw-open .mw-a,
+			.mw-open .mw-a:visited,
+			.mw-open .mw-a:visited:hover,
+			.mw-open .mw-a:focus,
+			.mw-open .mw-a:focus:hover,
+			.mw-open .mw-a:hover,
+			.mw-open .mw-a:active {
+				color: #000;
+				text-decoration: none;
+				border-color: #ccc;
+				background-color: #fff;
+			}
+			.mw-div {
+				background: #fff;
+				background: rgba(255, 255, 255, .9);
+				border-width: 0 1px 1px;
+				border-style: solid;
+				border-color: #ccc;
+				-moz-box-shadow: 0 5px 5px 0 rgba(0, 0, 0, .25);
+				-webkit-box-shadow: 0 5px 5px 0 rgba(0, 0, 0, .25);
+				box-shadow: 0 10px 10px 0 rgba(0, 0, 0, .25);
+				-webkit-border-radius: 0 0 3px 3px;
+				-moz-border-radius: 0 0 3px 3px;
+				border-radius: 0 0 3px 3px;
+			}
+	
+	/*
+	**----------------------------------
+	** Dropdown width:
+	**----------------------------------
+	*/
+	
+	/*
+		Firefox 13.0.1 exhibits, what appears to be, a positioning rounding bug
+		when scaling the window up/down - Adding .1px appears to fix.
+	*/
+	
+	.mw-div {
+		width: 978.1px; /* -2px for left/right borders. */
+		width: 978px\9; /* IE8 appears to round up. Feeding whole number width for IE <= 9 (rgne.ws/P4re4f). */
+	}
+	
+	/*
+	**----------------------------------
+	** Arrows:
+	**----------------------------------
+	*/
+	
+	.mw-ul {}
+		.mw-li {}
+			.mw-a-with-div {
+				*zoom: 1; /* Trigger IE7 hasLayout so <span>s position accurately. */
+				_zoom: normal; /* IE6 goes crazy when hasLayout (above) is set. */
+			}
+				.mw-arrow {
+					text-indent: -999em;
+					background-image: url(./images/arrow.png);
+					_background-image: url(./images/arrow.gif);
+					background-repeat: no-repeat;
+					width: 8px;
+					height: 4px;
+					margin-top: -2px; /* That's height/2. */
+					_margin: 0;
+					display: block;
+					position: absolute;
+					top: 50%;
+					_top: 1.25em; /* Eyeballing it. */
+					right: 8px;
+					overflow: hidden;
+				}
+				.mw-open .mw-arrow { background-position: 0 -4px; }
+	
+	/*
+	**----------------------------------
+	** Close button:
+	**----------------------------------
+	*/
+	
+	.mw-close {
+		text-indent: -999em;
+		background-image: url(./images/close.png);
+		_background-image: url(./images/close.gif);
+		background-repeat: no-repeat;
+		width: 32px;
+		height: 32px;
+		display: block;
+		position: absolute;
+		right: 3px;
+		bottom: 1px;
+		overflow: hidden;
+		z-index: 100;
+		cursor: hand;
+		cursor: pointer;
+	}
+	
+}
+
+@media only screen and (min-width: 1345px) {
+	
+	/*
+	**--------------------------------------------------------------------------
+	**
+	** Desktop menu:
+	**
+	**--------------------------------------------------------------------------
+	*/
+	
+	/*
+	**----------------------------------
+	** Dropdown width:
+	**----------------------------------
+	*/
+	
+	/*
+		IBID.
+	*/
+
+	.mw-div {
+		width: 1318.1px; /* IBID. */
+		width: 1318px\9; /* IBID. */
+	}
+	
+}
+
+/*
+**--------------------------------------------------------------------------
+**
+** Retina display at >= 990 width:
+** rgne.ws/M1CLgG
+**
+**--------------------------------------------------------------------------
+*/
+
+@media
+only screen and (min-width: 990px) and (min--moz-device-pixel-ratio: 1.5),
+only screen and (min-width: 990px) and (-moz-min-device-pixel-ratio: 1.5),
+only screen and (min-width: 990px) and (-o-min-device-pixel-ratio: 3/2),
+only screen and (min-width: 990px) and (-webkit-min-device-pixel-ratio: 1.5),
+only screen and (min-width: 990px) and (min-device-pixel-ratio: 1.5),
+only screen and (min-width: 990px) and (min-resolution: 1.5dppx) {
+	
+	/*
+	**----------------------------------
+	** Arrows:
+	**----------------------------------
+	*/
+	
+	.mw-arrow {
+		background-image: url(./images/arrow@2x.png);
+		-moz-background-size: 8px 8px;
+		-ie-background-size: 8px 8px;
+		-o-background-size: 8px 8px;
+		-webkit-background-size: 8px 8px;
+		background-size: 8px 8px;
+	}
+	
+	/*
+	**----------------------------------
+	** Close button:
+	**----------------------------------
+	*/
+	
+	.mw-close {
+		background-image: url(./images/close@2x.png);
+		-moz-background-size: 32px 32px;
+		-ie-background-size: 32px 32px;
+		-o-background-size: 32px 32px;
+		-webkit-background-size: 32px 32px;
+		background-size: 32px 32px;
+	}
+	
+}
