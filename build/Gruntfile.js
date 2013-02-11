@@ -68,7 +68,13 @@ module.exports = function(grunt) {
 				smarttabs: true,
 				browser: true,
 				quotmark: true,
-				curly: true
+				curly: true,
+				
+				globals : {
+					
+					DocumentTouch: true
+					
+				}
 				
 			},
 			
