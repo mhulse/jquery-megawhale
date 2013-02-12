@@ -12,40 +12,42 @@
 //----------------------------------
 
 // @TODO:
-// All vars that are objects use `$xxxx`.
+// All vars that are objects use $xxxx.
 // Test for memory leaks.
-// Check usage of `this`: Does it need to be $(this) when passed?
-// Make `open`/`close` methods "more" public.
-// What's the best thing to return via callback methods (i.e. the menu `<ul>` or the current `item`.)?
-// Use `((this instanceof jQuery) ? this : $(this))` where `$(this)` is uncertain. <rgne.ws/NbAsvY>
+// Check usage of this: Does it need to be $(this) when passed?
+// Make open/close methods "more" public.
+// What's the best thing to return via callback methods (i.e. the menu `<ul>` or the current item.)?
+// Use ((this instanceof jQuery) ? this : $(this)) where $(this) is uncertain. <rgne.ws/NbAsvY>
 
 //----------------------------------
 
 ;(function($, window, document, undefined) {
 	
-	'use strict';
+	'use strict'; // Lint setting.
 	
 	//--------------------------------------------------------------------------
 	//
-	// Global variables:
+	// Local "globals":
 	//
 	//--------------------------------------------------------------------------
+	
+	/**
+	 * Javascript console.
+	 *
+	 * @see rgne.ws/12p2bvl
+	 */
+	
+	var console = window.console || { log : function() {}, warn : function() {} },
 	
 	/**
 	 * Detects if it's a touch device.
-	 * Used in `constants` object literal.
+	 * Used in constants object literal.
 	 *
-	 * @link rgne.ws/N9c4uV
-	 * @link rgne.ws/Nq086y
+	 * @see rgne.ws/N9c4uV
+	 * @see rgne.ws/Nq086y
 	 */
 	
-	var touch = (('ontouchstart' in window) || (window.DocumentTouch && document instanceof DocumentTouch)),
-	
-	/**
-	 * Javascript `console`.
-	 */
-	
-	console = window.console || { log : function() {}, warn : function() {} },
+	touch = (('ontouchstart' in window) || (window.DocumentTouch && document instanceof DocumentTouch)),
 	
 	//--------------------------------------------------------------------------
 	//
@@ -57,16 +59,15 @@
 	 * Commonly used variables.
 	 *
 	 * @type { object }
-	 *
 	 * @const
 	 */
 	
 	constants = {
 		
-		NS     : 'megawhale',                                       // Namespace identifier.
-		PREFIX : 'mw',                                              // Class prefix.
-		TOUCH  : touch,                                             // Touch capable?
-		TYPE   : (touch ? 'touchstart' : 'click')                   // rgne.ws/NaVbjk
+		NS     : 'megawhale',                     // Namespace identifier.
+		PREFIX : 'mw',                            // Class prefix.
+		TOUCH  : touch,                           // Touch capable?
+		TYPE   : (touch ? 'touchstart' : 'click') // rgne.ws/NaVbjk
 		
 	}, // constants
 	
@@ -87,16 +88,16 @@
 		/**
 		 * Init constructor.
 		 *
-		 * @type   { function }
-		 * @param  { object } opts Options object literal.
-		 * @this   { object.jquery }
+		 * @type { function }
+		 * @param { object } opts Options object literal.
+		 * @this { object.jquery }
 		 * @return { object.jquery } Returns target object(s) for chaining purposes.
 		 */
 		
 		init : function(opts) {
 			
 			//----------------------------------
-			// Loop & return each `this`:
+			// Loop & return each this:
 			//----------------------------------
 			
 			return this.each(function() {
@@ -107,7 +108,7 @@
 				
 				var $this   = $(this),                                                            // Target object.
 				    data    = $this.data(constants.NS),                                           // Namespace instance data.
-				    options = $.extend({}, settings.external, $.fn[constants.NS].defaults, opts); // Merge settings, defaults and options.
+				    options = $.extend({}, settings.external, $.fn[constants.NS].defaults, opts); // Merge settings, defaults and opts.
 				
 				//----------------------------------
 				// Initialize data:
@@ -119,9 +120,9 @@
 					// Select primary objects:
 					//----------------------------------
 					
-					var $divs  = $this.children('li').children('div'), // <div>s whom are the immediate children of <li>s.
-					    $lis   = $divs.parent('li'),                   // <li>s that are the direct parent of <div>s.
-					    $hrefs = $lis.children('a');                   // <a>s whom are the immediate children of <li>s.
+					var $divs  = $this.children('li').children('div'), // `<div>`s whom are the immediate children of `<li>`s.
+					    $lis   = $divs.parent('li'),                   // `<li>`s that are the direct parent of `<div>`s.
+					    $hrefs = $lis.children('a');                   // `<a>`s whom are the immediate children of `<li>`s.
 					
 					//----------------------------------
 					// Namespaced instance data:
@@ -140,7 +141,7 @@
 					});
 					
 					//----------------------------------
-					// Easy access for later:
+					// Easy access:
 					//----------------------------------
 					
 					data = $this.data(constants.NS);
@@ -154,393 +155,35 @@
 				if ( ! data.init) {
 					
 					//----------------------------------
-					// Data initialization flag:
+					// Call main:
 					//----------------------------------
 					
-					data.init = true;
-					
-					//----------------------------------
-					// Callback:
-					//----------------------------------
-					
-					data.options.onInit.call(data.target);
-					
-					//----------------------------------
-					// Check for object(s):
-					//----------------------------------
-					
-					if ((data.divs.length === data.hrefs.length)) { // There will always be one `<li>` per `<div>`, so we compare `<div>`s equivalency to it's `<a>` siblings.
-						
-						//----------------------------------
-						// Root menu CSS class:
-						//----------------------------------
-						
-						data.target.addClass(settings.internal.menuClass);
-						
-						//----------------------------------
-						// Hide menus:
-						//----------------------------------
-						
-						data.divs.hide();
-						
-						//----------------------------------
-						// Normalize event type:
-						//----------------------------------
-						
-						data.options.eventType = (/^(?:click|hover|hoverIntent)$/).test(data.options.eventType) ? data.options.eventType : 'hover'; // rgne.ws/Mxhw5C
-						
-						//----------------------------------
-						// Link arrows?
-						//----------------------------------
-						
-						if (data.options.arrow) {
-							
-							data.hrefs
-								
-								//----------------------------------
-								// Add anchor class:
-								//----------------------------------
-								
-								.addClass(settings.internal.anchorClass)
-								
-								//----------------------------------
-								// Append arrow HTML to `<a>`s:
-								//----------------------------------
-								
-								.append(data.options.arrow);
-								
-						}
-						
-						//----------------------------------
-						// Close buttons (touch/click only)?
-						//----------------------------------
-						
-						if (((data.options.eventType === 'click') || constants.TOUCH) && data.options.close) {
-							
-							//----------------------------------
-							// Create new DOM element:
-							//----------------------------------
-							
-							$(data.options.close)
-								
-								//----------------------------------
-								// Append button HTML to `<div>`s:
-								//----------------------------------
-								
-								.appendTo(data.divs)
-								
-								//----------------------------------
-								// Attach event handler(s):
-								//----------------------------------
-								
-								.on(constants.TYPE + '.' + constants.NS, function(e) {
-									
-									//----------------------------------
-									// Local variable(s):
-									//----------------------------------
-									
-									var $li = $(this).parent('div').parent('li');
-									
-									//----------------------------------
-									// Close menu:
-									//----------------------------------
-									
-									methods.close.call($li);
-									
-									//----------------------------------
-									// Prevent default & stop bubbling:
-									//----------------------------------
-									
-									e.preventDefault(); // Probably not needed here.
-									e.stopPropagation();
-									
-								});
-							
-						}
-						
-						//----------------------------------
-						// Attach event handler(s):
-						//----------------------------------
-						
-						// rgne.ws/O0PD7y
-						data.hrefs.on('mousedown.' + constants.NS + ' mouseup.' + constants.NS + ' focus.' + constants.NS, function(e) {
-							
-							//----------------------------------
-							// Local variable(s):
-							//----------------------------------
-							
-							var $$  = $(this),
-							    $li = $$.parent('li');
-							
-							//----------------------------------
-							// Event type?:
-							//----------------------------------
-							
-							switch (e.type) {
-								
-								case 'mousedown':
-									
-									//----------------------------------
-									// Mouse is down (add mousedown):
-									//----------------------------------
-									
-									$li.data(constants.NS + '.mousedown', true); // rgne.ws/NIZSit
-									
-									break;
-								
-								case 'mouseup':
-									
-									//----------------------------------
-									// Mouse is up (remove mousedown):
-									//----------------------------------
-									
-									$li.removeData(constants.NS + '.mousedown');
-									
-									break;
-								
-								case 'focus':
-									
-									//----------------------------------
-									// Link has focus:
-									//----------------------------------
-									
-									if ( ! $li.data(constants.NS + '.mousedown')) {
-										
-										//----------------------------------
-										// Touch or click?
-										//----------------------------------
-										
-										if (constants.TOUCH || (data.options.eventType === 'click')) {
-											
-											//----------------------------------
-											// Override focus:
-											//----------------------------------
-											
-											$$.click();
-											
-										} else {
-											
-											//----------------------------------
-											// Start outside events?
-											//----------------------------------
-											
-											if (data.options.eventOutside) {
-												
-												startOutside(data);
-												
-											}
-											
-											//----------------------------------
-											// Open menu:
-											//----------------------------------
-											
-											methods.open.call($li);
-											
-										}
-										
-									}
-									
-									break;
-								
-							}
-							
-							//----------------------------------
-							// Prevent default & stop bubbling:
-							//----------------------------------
-							
-							e.preventDefault();
-							e.stopPropagation();
-							
-						});
-						
-						//----------------------------------
-						// Is it a click or touch?
-						//----------------------------------
-						
-						if (constants.TOUCH || (data.options.eventType === 'click')) {
-							
-							//----------------------------------
-							// Attach event handler(s):
-							//----------------------------------
-							
-							data.hrefs.on(constants.TYPE + '.' + constants.NS, function(e) {
-								
-								//----------------------------------
-								// Local variable(s):
-								//----------------------------------
-								
-								var $$  = $(this),
-								    $li = $$.parent('li');
-								
-								//----------------------------------
-								// A click, but is it first click?
-								//----------------------------------
-								
-								if ($$.hasClass(settings.internal.clickClass)) {
-									
-									//----------------------------------
-									// End outside events?
-									//----------------------------------
-									
-									if (data.options.eventOutside) {
-										
-										endOutside(data);
-										
-									}
-									
-									//----------------------------------
-									// Close menu:
-									//----------------------------------
-									
-									methods.close.call($li); // Fixes issue when back button is clicked and `window.location` is called again.
-									
-									//----------------------------------
-									// Get link:
-									//----------------------------------
-									
-									var uri = getUri.call($$);
-									
-									//----------------------------------
-									// Follow link?
-									//----------------------------------
-									
-									if (uri) {
-										
-										window.location = uri;
-										
-									}
-									
-								} else {
-									
-									//----------------------------------
-									// Start outside events?
-									//----------------------------------
-									
-									if (data.options.eventOutside) {
-										
-										startOutside(data);
-										
-									}
-									
-									//----------------------------------
-									// Remove `clickClass` from `hrefs`:
-									//----------------------------------
-									
-									data.hrefs.removeClass(settings.internal.clickClass);
-									
-									//----------------------------------
-									// Add `clickClass` to `this`:
-									//----------------------------------
-									
-									$$.addClass(settings.internal.clickClass);
-									
-									//----------------------------------
-									// Open menu:
-									//----------------------------------
-									
-									methods.open.call($li);
-									
-								}
-								
-								//----------------------------------
-								// Prevent default & stop bubbling:
-								//----------------------------------
-								
-								e.preventDefault();
-								e.stopPropagation();
-								
-							});
-							
-						} else {
-							
-							//----------------------------------
-							// Attach event handler(s):
-							//----------------------------------
-							
-							data.lis.on('mouseenter.' + constants.NS + ' mouseleave.' + constants.NS, function(e) {
-								
-								//----------------------------------
-								// Local variable(s):
-								//----------------------------------
-								
-								var $$ = $(this);
-								
-								//----------------------------------
-								// Event type?:
-								//----------------------------------
-								
-								switch (e.type) {
-									
-									case 'mouseenter':
-										
-										//----------------------------------
-										// End outside events?
-										//----------------------------------
-										
-										if (data.options.eventOutside) {
-											
-											endOutside(data);
-											
-										}
-										
-										//----------------------------------
-										// Hover open:
-										//----------------------------------
-										
-										$.fn[constants.NS].hoverEnter.call($$);
-										
-										break;
-									
-									case 'mouseleave':
-										
-										//----------------------------------
-										// Hover close:
-										//----------------------------------
-										
-										$.fn[constants.NS].hoverLeave.call($$);
-										
-										break;
-									
-								}
-								
-							});
-							
-						}
-						
-						//----------------------------------
-						// Callback:
-						//----------------------------------
-						
-						data.options.onAfterInit.call(data.target);
-						
-					} else {
-						
-						console.warn('there was a problem with your markup');
-						
-						return this;
-						
-					}
+					_main.call($this, data);
 					
 				} else {
 					
-					console.warn(constants.NS, 'already initialized on', this);
+					//----------------------------------
+					// Ouch!
+					//----------------------------------
 					
-					return this;
+					console.warn('jQuery.' + constants.NS, 'thinks it\'s already initialized on', this);
+					
+					//return this; // Needed?
 					
 				}
 				
 			});
 			
-		}, // init()
+		}, // init
 		
-		//--------------------------------------------------------------------
+		//----------------------------------
 		
 		/**
 		 * Open menu.
 		 *
-		 * @type   { function }
-		 * @param  { object.jquery } $elem An `<li>` element.
-		 * @this   { object.jquery }
+		 * @type { function }
+		 * @param { object.jquery } $elem An `<li>` element.
+		 * @this { object.jquery }
 		 * @return { object.jquery } Returns target object(s) for chaining purposes.
 		 */
 		
@@ -550,14 +193,14 @@
 			// Handle API invoked method:
 			//----------------------------------
 			
-			if (typeof $elem === 'undefined') {
+			if (typeof $elem == 'undefined') {
 				
-				$elem = this; // Remove `var`.
+				$elem = this;
 				
 			}
 			
 			//----------------------------------
-			// Loop & return each `this`:
+			// Loop & return each this:
 			//----------------------------------
 			
 			return $elem.each(function() {
@@ -566,24 +209,24 @@
 				// Local variable(s):
 				//----------------------------------
 				
-				var $$   = $(this),
-				    data = $$.parent().data(constants.NS);
+				var $this = $(this),
+				    data  = $this.parent().data(constants.NS);
 				
 				//----------------------------------
 				// Already open?
 				//----------------------------------
 				
-				if ( ! $$.hasClass(data.options.openClass)) {
+				if ( ! $this.hasClass(data.options.openClass)) {
 					
-					//data.hrefs.not($$.children('a')).blur(); // Removes focus from other `hrefs` if there's `focus` and a `hover`; commented out for now because it seems like overkill.
+					//data.hrefs.not($this.children('a')).blur(); // Removes focus from other hrefs if there's focus and a hover; commented out for now because it seems like overkill.
 					
 					//----------------------------------
-					// Get child <div>:
+					// Get child `<div>`:
 					//----------------------------------
 					
-					var $div = $$.children('div');
+					var $div = $this.children('div');
 					
-					$$
+					$this
 						
 						//----------------------------------
 						// Add hover class:
@@ -592,7 +235,7 @@
 						.addClass(data.options.openClass)
 						
 						//----------------------------------
-						// Remove adjacent `openClass`es:
+						// Remove adjacent "openClass"es:
 						//----------------------------------
 						
 						.siblings()
@@ -608,7 +251,7 @@
 						// Stop animation and clear queue:
 						//----------------------------------
 						
-						.stop(true) // Required/important!
+						.stop(true) // Required & very important!
 						
 						//----------------------------------
 						// Hide `<div>`s:
@@ -651,7 +294,7 @@
 						// Callback:
 						//----------------------------------
 						
-						data.options.onShow.call($div);
+						data.options.onShow.call($(this));
 						
 					});
 					
@@ -659,16 +302,16 @@
 				
 			});
 			
-		}, // open()
+		}, // open
 		
-		//--------------------------------------------------------------------
+		//----------------------------------
 		
 		/**
 		 * Close menu.
 		 *
-		 * @type   { function }
-		 * @param  { object.jquery } $elem An `<li>` object.
-		 * @this   { object.jquery }
+		 * @type { function }
+		 * @param { object.jquery } $elem An `<li>` object.
+		 * @this { object.jquery }
 		 * @return { object.jquery } Returns target object(s) for chaining purposes.
 		 */
 		
@@ -678,14 +321,14 @@
 			// Handle API invoked method:
 			//----------------------------------
 			
-			if (typeof $elem === 'undefined') {
+			if (typeof $elem == 'undefined') {
 				
 				$elem = this;
 				
 			}
 			
 			//----------------------------------
-			// Loop & return each `this`:
+			// Loop & return each this:
 			//----------------------------------
 			
 			return $elem.each(function() {
@@ -694,22 +337,22 @@
 				// Local variable(s):
 				//----------------------------------
 				
-				var $$   = $(this),
-				    data = $$.parent().data(constants.NS);
+				var $this = $(this),
+				    data  = $this.parent().data(constants.NS);
 				
 				//----------------------------------
 				// Open?
 				//----------------------------------
 				
-				if ($$.hasClass(data.options.openClass)) {
+				if ($this.hasClass(data.options.openClass)) {
 					
 					//----------------------------------
 					// Get child `<div>`:
 					//----------------------------------
 					
-					var $div = $$.children('div');
+					var $div = $this.children('div');
 					
-					$$
+					$this
 						
 						//----------------------------------
 						// Remove click class:
@@ -736,8 +379,10 @@
 					
 					$div.animate(data.options.animOut, data.options.speedOut, data.options.easeOut, function() {
 						
-						$(this)
+						var $$ = $(this);
 						
+						$$
+							
 							//----------------------------------
 							// Hide `<div>`s:
 							//----------------------------------
@@ -756,7 +401,7 @@
 						// Callback:
 						//----------------------------------
 						
-						data.options.onHide.call($div);
+						data.options.onHide.call($$);
 						
 					});
 					
@@ -764,21 +409,22 @@
 				
 			});
 			
-		}, // close()
+		}, // close
 		
-		//--------------------------------------------------------------------
+		//----------------------------------
 		
 		/**
 		 * Removes plugin from element.
 		 *
-		 * @type   { function }
+		 * @type { function }
+		 * @this { object.jquery }
 		 * @return { object.jquery } Returns target object(s) for chaining purposes.
 		 */
 		
 		destroy : function() {
 			
 			//----------------------------------
-			// Loop & return each `this`:
+			// Loop & return each this:
 			//----------------------------------
 			
 			return this.each(function() {
@@ -787,8 +433,8 @@
 				// Local variable(s):
 				//----------------------------------
 				
-				var $$ = $(this),
-				data   = $$.data(constants.NS);
+				var $this = $(this),
+				    data  = $this.data(constants.NS);
 				
 				if (data) {
 					
@@ -852,12 +498,12 @@
 							// Remove:
 							//----------------------------------
 							
-							.remove();
+							.remove(); // All bound events and jQuery data associated with the elements are removed: rgne.ws/LqMnF5
 						
 					}
 					
 					//----------------------------------
-					// Remove click class from `hrefs`:
+					// Remove click class from hrefs:
 					//----------------------------------
 					
 					data.hrefs.removeClass(settings.internal.clickClass);
@@ -887,16 +533,16 @@
 					data.target.removeClass(settings.internal.menuClass);
 					
 					//----------------------------------
-					// Namespaced instance `data`:
+					// Namespaced instance data:
 					//----------------------------------
 					
-					$$.removeData(constants.NS);
+					$this.removeData(constants.NS);
 					
 				}
 			
 			});
 			
-		} // destroy()
+		} // destroy
 		
 	}, // methods
 	
@@ -907,15 +553,423 @@
 	//--------------------------------------------------------------------------
 	
 	/**
-	 * Determine if `click`/`touch`/`focus` "outside" detection is needed.
+	 * Called after plugin initialization.
 	 *
-	 * @link  rgne.ws/LRzBkh
-	 * @link  rgne.ws/PX2ITp
-	 * @type  { function }
+	 * @private
+	 * @type { function }
+	 * @this { object.jquery }
+	 */
+	
+	_main = function(data) {
+		
+		//----------------------------------
+		// Data?
+		//----------------------------------
+		
+		if (typeof data == 'undefined') {
+			
+			//----------------------------------
+			// Attempt to determine data:
+			//----------------------------------
+			
+			data = this.data(constants.NS);
+			
+		}
+		
+		//----------------------------------
+		// Data?
+		//----------------------------------
+		
+		if (data) {
+			
+			//----------------------------------
+			// Yup!
+			//----------------------------------
+			
+			data.init = true; // Data initialization flag.
+			
+			//----------------------------------
+			// Callback:
+			//----------------------------------
+			
+			data.options.onInit.call(data.target);
+			
+			//----------------------------------
+			// Check for object(s):
+			//----------------------------------
+			
+			if ((data.divs.length === data.hrefs.length)) { // There will always be one `<li>` per `<div>`, so we compare `<div>`s equivalency to it's `<a>` siblings.
+				
+				//----------------------------------
+				// Root menu CSS class:
+				//----------------------------------
+				
+				data.target.addClass(settings.internal.menuClass);
+				
+				//----------------------------------
+				// Hide menus:
+				//----------------------------------
+				
+				data.divs.hide();
+				
+				//----------------------------------
+				// Normalize event type:
+				//----------------------------------
+				
+				data.options.eventType = (/^(?:click|hover|hoverIntent)$/).test(data.options.eventType) ? data.options.eventType : 'hover'; // rgne.ws/Mxhw5C
+				
+				//----------------------------------
+				// Link arrows?
+				//----------------------------------
+				
+				if (data.options.arrow) {
+					
+					data.hrefs
+						
+						//----------------------------------
+						// Add anchor class:
+						//----------------------------------
+						
+						.addClass(settings.internal.anchorClass)
+						
+						//----------------------------------
+						// Append arrow HTML to `<a>`s:
+						//----------------------------------
+						
+						.append(data.options.arrow);
+					
+				}
+				
+				//----------------------------------
+				// Close buttons (touch/click only)?
+				//----------------------------------
+				
+				if (((data.options.eventType === 'click') || constants.TOUCH) && data.options.close) {
+					
+					//----------------------------------
+					// Create new DOM element:
+					//----------------------------------
+					
+					$(data.options.close)
+						
+						//----------------------------------
+						// Append button HTML to `<div>`s:
+						//----------------------------------
+						
+						.appendTo(data.divs)
+						
+						//----------------------------------
+						// Attach event handler(s):
+						//----------------------------------
+						
+						.on(constants.TYPE + '.' + constants.NS, function(e) {
+							
+							//----------------------------------
+							// Local variable(s):
+							//----------------------------------
+							
+							var $li = $(this).parent('div').parent('li');
+							
+							//----------------------------------
+							// Close menu:
+							//----------------------------------
+							
+							methods.close.call($li);
+							
+							//----------------------------------
+							// Prevent default & stop bubbling:
+							//----------------------------------
+							
+							e.preventDefault(); // Probably not needed here?
+							e.stopPropagation();
+							
+						});
+					
+				}
+				
+				//----------------------------------
+				// Attach event handler(s):
+				//----------------------------------
+				
+				data.hrefs.on('mousedown.' + constants.NS + ' mouseup.' + constants.NS + ' focus.' + constants.NS, function(e) { // rgne.ws/O0PD7y
+					
+					//----------------------------------
+					// Local variable(s):
+					//----------------------------------
+					
+					var $this = $(this),
+					    $li   = $this.parent('li');
+					
+					//----------------------------------
+					// Event type?:
+					//----------------------------------
+					
+					switch (e.type) {
+						
+						case 'mousedown':
+							
+							//----------------------------------
+							// Mouse is down (add mousedown):
+							//----------------------------------
+							
+							$li.data(constants.NS + '.mousedown', true); // rgne.ws/NIZSit
+							
+							break;
+						
+						case 'mouseup':
+							
+							//----------------------------------
+							// Mouse is up (remove mousedown):
+							//----------------------------------
+							
+							$li.removeData(constants.NS + '.mousedown');
+							
+							break;
+						
+						case 'focus':
+							
+							//----------------------------------
+							// Link has focus:
+							//----------------------------------
+							
+							if ( ! $li.data(constants.NS + '.mousedown')) {
+								
+								//----------------------------------
+								// Touch or click?
+								//----------------------------------
+								
+								if (constants.TOUCH || (data.options.eventType === 'click')) {
+									
+									//----------------------------------
+									// Override focus:
+									//----------------------------------
+									
+									$this.click();
+									
+								} else {
+									
+									//----------------------------------
+									// Start outside events?
+									//----------------------------------
+									
+									if (data.options.eventOutside) {
+										
+										_startOutside(data);
+										
+									}
+									
+									//----------------------------------
+									// Open menu:
+									//----------------------------------
+									
+									methods.open.call($li);
+									
+								}
+								
+							}
+							
+							break;
+						
+					}
+					
+					//----------------------------------
+					// Prevent default & stop bubbling:
+					//----------------------------------
+					
+					e.preventDefault();
+					e.stopPropagation();
+					
+				});
+				
+				//----------------------------------
+				// Is it a click or touch?
+				//----------------------------------
+				
+				if (constants.TOUCH || (data.options.eventType === 'click')) {
+					
+					//----------------------------------
+					// Attach event handler(s):
+					//----------------------------------
+					
+					data.hrefs.on(constants.TYPE + '.' + constants.NS, function(e) {
+						
+						//----------------------------------
+						// Local variable(s):
+						//----------------------------------
+						
+						var $this = $(this),
+						    $li   = $this.parent('li');
+						
+						//----------------------------------
+						// A click, but is it first click?
+						//----------------------------------
+						
+						if ($this.hasClass(settings.internal.clickClass)) {
+							
+							//----------------------------------
+							// End outside events?
+							//----------------------------------
+							
+							if (data.options.eventOutside) {
+								
+								_endOutside(data);
+								
+							}
+							
+							//----------------------------------
+							// Close menu:
+							//----------------------------------
+							
+							methods.close.call($li); // Fixes issue when back button is clicked and `window.location` is called again.
+							
+							//----------------------------------
+							// Get link:
+							//----------------------------------
+							
+							var uri = _getUri.call($this);
+							
+							//----------------------------------
+							// Follow link?
+							//----------------------------------
+							
+							if (uri) {
+								
+								window.location = uri;
+								
+							}
+							
+						} else {
+							
+							//----------------------------------
+							// Start outside events?
+							//----------------------------------
+							
+							if (data.options.eventOutside) {
+								
+								_startOutside(data);
+								
+							}
+							
+							//----------------------------------
+							// Remove `clickClass` from `hrefs`:
+							//----------------------------------
+							
+							data.hrefs.removeClass(settings.internal.clickClass);
+							
+							//----------------------------------
+							// Add `clickClass` to `this`:
+							//----------------------------------
+							
+							$this.addClass(settings.internal.clickClass);
+							
+							//----------------------------------
+							// Open menu:
+							//----------------------------------
+							
+							methods.open.call($li);
+							
+						}
+						
+						//----------------------------------
+						// Prevent default & stop bubbling:
+						//----------------------------------
+						
+						e.preventDefault();
+						e.stopPropagation();
+						
+					});
+					
+				} else {
+					
+					//----------------------------------
+					// Attach event handler(s):
+					//----------------------------------
+					
+					data.lis.on('mouseenter.' + constants.NS + ' mouseleave.' + constants.NS, function(e) {
+						
+						//----------------------------------
+						// Local variable(s):
+						//----------------------------------
+						
+						var $this = $(this);
+						
+						//----------------------------------
+						// Event type?:
+						//----------------------------------
+						
+						switch (e.type) {
+							
+							case 'mouseenter':
+								
+								//----------------------------------
+								// End outside events?
+								//----------------------------------
+								
+								if (data.options.eventOutside) {
+									
+									_endOutside(data);
+									
+								}
+								
+								//----------------------------------
+								// Hover open:
+								//----------------------------------
+								
+								$.fn[constants.NS].hoverEnter.call($this);
+								
+								break;
+							
+							case 'mouseleave':
+								
+								//----------------------------------
+								// Hover close:
+								//----------------------------------
+								
+								$.fn[constants.NS].hoverLeave.call($this);
+								
+								break;
+							
+						}
+						
+					});
+					
+				}
+				
+				//----------------------------------
+				// Callback:
+				//----------------------------------
+				
+				data.options.onAfterInit.call(data.target);
+				
+			} else {
+				
+				//----------------------------------
+				// Problemos:
+				//----------------------------------
+				
+				console.warn('jQuery.' + constants.NS, 'thinks there\'s a problem with your markup');
+				
+			}
+			
+		}
+		
+	}, // _main
+	
+	//----------------------------------
+	
+	/**
+	 * Determine if click/touch/focus "outside" detection is needed.
+	 *
+	 * @private
+	 * @see rgne.ws/LRzBkh
+	 * @see rgne.ws/PX2ITp
+	 * @type { function }
 	 * @param { object } data Data object literal.
 	 */
 	
-	startOutside = function(data) {
+	_startOutside = function(data) {
+		
+		// Should I check for data before doing anything?
 		
 		//----------------------------------
 		// Check if we're not already setup:
@@ -939,19 +993,19 @@
 			// Local variable(s):
 			//----------------------------------
 			
-			var $$ = $(document); // rgne.ws/OvKeU6
+			var $doc = $(document); // rgne.ws/OvKeU6
 			
 			//----------------------------------
 			// Detach event handler(s):
 			//----------------------------------
 			
-			$$.off('.' + constants.NS);
+			$doc.off('.' + constants.NS);
 			
 			//----------------------------------
 			// Attach event handler(s):
 			//----------------------------------
 			
-			$$.on('focusin.' + constants.NS + ' ' + constants.TYPE + '.' + constants.NS, function(e) { // Mac OS X/Firefox: `focusin` required for `focus` outside nav.
+			$doc.on('focusin.' + constants.NS + ' ' + constants.TYPE + '.' + constants.NS, function(e) { // Mac OS X/Firefox: `focusin` required for `focus` outside nav.
 				
 				//----------------------------------
 				// Make sure we're not our target:
@@ -963,7 +1017,7 @@
 					// End outside events?
 					//----------------------------------
 					
-					endOutside(data);
+					_endOutside(data);
 					
 					//----------------------------------
 					// Close menu:
@@ -982,18 +1036,19 @@
 			
 		}
 		
-	}, // startOutside()
+	}, // _startOutside
 	
 	//--------------------------------------------------------------------
 	
 	/**
 	 * Remove click/touch/focus outside detection.
 	 *
-	 * @type  { function }
+	 * @private
+	 * @type { function }
 	 * @param { object } data Data object literal.
 	 */
 	
-	endOutside = function(data) {
+	_endOutside = function(data) {
 		
 		//----------------------------------
 		// Check if we're already setup:
@@ -1021,25 +1076,26 @@
 			
 		}
 		
-	}, // endOutside()
+	}, // _endOutside
 	
 	//--------------------------------------------------------------------
 	
 	/**
-	 * Get URI from <a>s href attribute.
-	 * 
-	 * @type   { function }
-	 * @this   { object.jquery } An `<a>` with `href`.
-	 * @return { string|boolean } An `<a>` `href` value or `false`.
+	 * Get URI from `<a>`s href attribute.
+	 *
+	 * @private
+	 * @type { function }
+	 * @this { object.jquery } An `<a>` with href.
+	 * @return { string|boolean } An `<a>` href value or false.
 	 */
 	
-	getUri = function() {
+	_getUri = function() {
 		
 		//----------------------------------
 		// Local variable(s):
 		//----------------------------------
 		
-		var uri = this.attr('href'); // Get link from `href` attribute.
+		var uri = this.attr('href'); // Get link from href attribute.
 		
 		//----------------------------------
 		// Return link or false:
@@ -1047,7 +1103,7 @@
 		
 		return (uri && (uri !== '#')) ? uri : false; // @TODO: Improve URI validation?
 		
-	}; // getUri()
+	}; // _getUri
 	
 	//--------------------------------------------------------------------------
 	//
@@ -1058,35 +1114,30 @@
 	/**
 	 * Boilerplate plugin logic.
 	 *
-	 * @link   rgne.ws/OvKpPc
-	 * @type   { function }
-	 * @param  { string } method String method identifier.
-	 * @return { method } Calls plugin method with supplied params.
-	 *
 	 * @constructor
+	 * @see rgne.ws/OvKpPc
+	 * @type { function }
+	 * @param { string } method String method identifier.
+	 * @return { method } Calls plugin method with supplied params.
 	 */
 	
 	$.fn[constants.NS] = function(method) {
-		
-		//----------------------------------
-		// Boilerplate:
-		//----------------------------------
 		
 		if (methods[method]) {
 			
 			return methods[method].apply(this, Array.prototype.slice.call(arguments, 1));
 			
-		} else if ((typeof method === 'object') || ( ! method)) {
+		} else if ((typeof method == 'object') || ( ! method)) {
 			
 			return methods.init.apply(this, arguments);
 			
 		} else {
 			
-			$.error('Method ' + method + ' does not exist on jQuery.' + constants.NS); // Should I override? rgne.ws/MwgkP8
+			$.error('jQuery.' + constants.NS + ' thinks that ' + method + ' doesn\'t exist'); // Should I override? rgne.ws/MwgkP8
 			
 		}
 		
-	}; // constructor()
+	}; // $.fn[constants.NS]
 	
 	//--------------------------------------------------------------------------
 	//
@@ -1099,15 +1150,15 @@
 	/**
 	 * Called when mouse enters `<li>`.
 	 *
-	 * @type   { function }
-	 * @this   { object.jquery }
+	 * @type { function }
+	 * @this { object.jquery }
 	 * @return { object.jquery } Returns target object(s) for chaining purposes.
 	 */
 	
 	$.fn[constants.NS].hoverEnter = function() {
 		
 		//----------------------------------
-		// Loop & return each `this`:
+		// Loop & return each this:
 		//----------------------------------
 		
 		return this.each(function() {
@@ -1116,8 +1167,8 @@
 			// Local variable(s):
 			//----------------------------------
 			
-			var $$   = $(this),
-			    data = $$.parent().data(constants.NS);
+			var $this = $(this),
+			    data  = $this.parent().data(constants.NS);
 			
 			//----------------------------------
 			// Just open or open with intent?
@@ -1129,7 +1180,7 @@
 				// Open menu:
 				//----------------------------------
 				
-				methods.open.call($$); // $.fn[constants.NS]('open', $$);
+				methods.open.call($this); // $.fn[constants.NS]('open', $this);
 				
 			} else {
 				
@@ -1137,7 +1188,7 @@
 				// With intent:
 				//----------------------------------
 				
-				$$.doTimeout('hover', data.options.delayIn, function() {
+				$this.doTimeout('hover', data.options.delayIn, function() {
 					
 					//----------------------------------
 					// Open menu:
@@ -1156,10 +1207,10 @@
 	//--------------------------------------------------------------------
 	
 	/**
-	 * Called when mouse leaves <li>.
+	 * Called when mouse leaves `<li>`.
 	 *
-	 * @type   { function }
-	 * @this   { object.jquery }
+	 * @type { function }
+	 * @this { object.jquery }
 	 * @return { object.jquery } Returns target object(s) for chaining purposes.
 	 */
 	
@@ -1175,8 +1226,8 @@
 			// Local variable(s):
 			//----------------------------------
 			
-			var $$   = $(this),
-			    data = $$.parent().data(constants.NS);
+			var $this = $(this),
+			    data  = $this.parent().data(constants.NS);
 			
 			//----------------------------------
 			// Just close or close with intent?
@@ -1188,7 +1239,7 @@
 				// Close menu:
 				//----------------------------------
 				
-				methods.close.call($$); // $.fn[constants.NS]('close', $$);
+				methods.close.call($this); // $.fn[constants.NS]('close', $this);
 				
 			} else {
 				
@@ -1196,7 +1247,7 @@
 				// With intent:
 				//----------------------------------
 				
-				$$.doTimeout('hover', data.options.delayOut, function() {
+				$this.doTimeout('hover', data.options.delayOut, function() {
 					
 					//----------------------------------
 					// Close menu:
@@ -1210,7 +1261,7 @@
 		
 		});
 		
-	}; // hoverLeave()
+	}; // hoverLeave
 	
 	//--------------------------------------------------------------------------
 	//
@@ -1224,7 +1275,7 @@
 	 * @type { object }
 	 */
 	
-	var settings = {}; // Initialize `config` object.
+	var settings = {}; // Initialize config object.
 	
 	//----------------------------------
 	
@@ -1258,12 +1309,12 @@
 		animOut      : { opacity: 'hide' },                                                // IBID, but for hiding.
 		arrow        : '<span class="' + settings.internal.arrowClass + '">&#187;</span>', // Markup to use for sub-menu arrow indicators; set to false to disable this feature.
 		close        : '<span class="' + settings.internal.closeClass + '">(X)</span>',    // Markup to use for close buttons when eventType is click or it's a touch device; set to false to disable this feature.
-		delayIn      : 400,                                                                // The delay in milliseconds that the mouse can `hover` "inside" the menu before it opens.
-		delayOut     : 700,                                                                // The delay in milliseconds that the mouse can `hover` "outside" the menu before it closes.
+		delayIn      : 400,                                                                // The delay in milliseconds that the mouse can hover "inside" the menu before it opens.
+		delayOut     : 700,                                                                // The delay in milliseconds that the mouse can hover "outside" the menu before it closes.
 		easeIn       : 'swing',                                                            // Easing function in.
 		easeOut      : 'swing',                                                            // Easing function out.
 		eventOutside : true,                                                               // Detect click outside events?
-		eventType    : 'hover',                                                            // One of `click`, `hover` or `hoverIntent`.
+		eventType    : 'hover',                                                            // One of "click", "hover" or "hoverIntent".
 		openClass    : constants.PREFIX + '-open',                                         // Applied to opened `<li>`s.
 		speedIn      : 'normal',                                                           // Animation speed in.
 		speedOut     : 'normal',                                                           // Animation speed out.
