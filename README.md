@@ -8,7 +8,7 @@
 		
 * `animIn`: What animation object to use to show the submenus. Default: `{ opacity: 'show' }`.
 * `animOut`: IBID, but for hiding. Default: `{ opacity: 'hide' }`.
-* `arrow`: Markup to use for sub-menu arrow indicators; set to false to disable this feature. Default: `'<span class="mw-arrow">&#187;</span>'`
+* `arrow`: Markup to use for sub-menu arrow indicators; set to false to disable this feature. Default: `<span class="mw-arrow">&#187;</span>`
 * `close`: Markup to use for sub-menu arrow indicators; set to false to disable this feature. Default: `<span class="mw-close">(X)</span>`.
 * `delayIn`: The delay in milliseconds that the mouse can `hover` "inside" the menu before it opens. Default: `400`.
 * `delayOut`: The delay in milliseconds that the mouse can `hover` "outside" the menu before it closes. Default: `700`.
