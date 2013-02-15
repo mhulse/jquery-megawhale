@@ -8,7 +8,7 @@
  * @copyright Copyright (c) 2013 Micky Hulse.
  * @license Released under the Apache License, Version 2.0.
  * @version 1.0.0
- * @date 2013/02/12
+ * @date 2013/02/15
  */
 
 //----------------------------------
@@ -36,7 +36,13 @@
 
 ;(function($, window, document, undefined) {
 	
-	'use strict'; // Lint setting.
+	/**
+	 * Function-level strict mode syntax.
+	 *
+	 * @see rgne.ws/XcZgn8
+	 */
+	
+	'use strict';
 	
 	//--------------------------------------------------------------------------
 	//
@@ -52,6 +58,8 @@
 	
 	var console = window.console || { log : function() {}, warn : function() {} },
 	
+	//----------------------------------
+	
 	/**
 	 * Detects if it's a touch device.
 	 * Used in constants object literal.
@@ -61,6 +69,16 @@
 	 */
 	
 	touch = (('ontouchstart' in window) || (window.DocumentTouch && document instanceof DocumentTouch)),
+	
+	//----------------------------------
+	
+	/**
+	 * Settings object.
+	 *
+	 * @type { object }
+	 */
+	
+	settings = {}, // Initialize config object.
 	
 	//--------------------------------------------------------------------------
 	//
@@ -116,26 +134,30 @@
 			return this.each(function() {
 				
 				//----------------------------------
-				// Local variable(s):
+				// Declare/initialize:
 				//----------------------------------
 				
-				var $this   = $(this),                                                            // Target object.
-				    data    = $this.data(constants.NS),                                           // Namespace instance data.
-				    options = $.extend({}, settings.external, $.fn[constants.NS].defaults, opts); // Merge settings, defaults and opts.
+				var $this = $(this),                  // Target object.
+				    data  = $this.data(constants.NS), // Namespace instance data.
+				    options,
+				    $divs,
+				    $lis,
+				    $hrefs;
 				
 				//----------------------------------
-				// Initialize data:
+				// Data?
 				//----------------------------------
 				
 				if ( ! data) {
 					
 					//----------------------------------
-					// Select primary objects:
+					// Initialize:
 					//----------------------------------
 					
-					var $divs  = $this.children('li').children('div'), // `<div>`s whom are the immediate children of `<li>`s.
-					    $lis   = $divs.parent('li'),                   // `<li>`s that are the direct parent of `<div>`s.
-					    $hrefs = $lis.children('a');                   // `<a>`s whom are the immediate children of `<li>`s.
+					options = $.extend({}, settings.external, $.fn[constants.NS].defaults, opts); // Merge settings, defaults and opts.
+					$divs   = $this.children('li').children('div');                               // `<div>`s whom are the immediate children of `<li>`s.
+					$lis    = $divs.parent('li');                                                 // `<li>`s that are the direct parent of `<div>`s.
+					$hrefs  = $lis.children('a');                                                 // `<a>`s whom are the immediate children of `<li>`s.
 					
 					//----------------------------------
 					// Namespaced instance data:
@@ -219,11 +241,12 @@
 			return $elem.each(function() {
 				
 				//----------------------------------
-				// Local variable(s):
+				// Declare/initialize:
 				//----------------------------------
 				
 				var $this = $(this),
-				    data  = $this.parent().data(constants.NS);
+				    data  = $this.parent().data(constants.NS),
+				    $div;
 				
 				//----------------------------------
 				// Already open?
@@ -237,7 +260,7 @@
 					// Get child `<div>`:
 					//----------------------------------
 					
-					var $div = $this.children('div');
+					$div = $this.children('div');
 					
 					$this
 						
@@ -347,11 +370,12 @@
 			return $elem.each(function() {
 				
 				//----------------------------------
-				// Local variable(s):
+				// Declare/initialize:
 				//----------------------------------
 				
 				var $this = $(this),
-				    data  = $this.parent().data(constants.NS);
+				    data  = $this.parent().data(constants.NS),
+				    $div;
 				
 				//----------------------------------
 				// Open?
@@ -363,7 +387,7 @@
 					// Get child `<div>`:
 					//----------------------------------
 					
-					var $div = $this.children('div');
+					$div = $this.children('div');
 					
 					$this
 						
@@ -391,6 +415,10 @@
 					//----------------------------------
 					
 					$div.animate(data.options.animOut, data.options.speedOut, data.options.easeOut, function() {
+						
+						//----------------------------------
+						// Declare/initialize:
+						//----------------------------------
 						
 						var $$ = $(this);
 						
@@ -443,7 +471,7 @@
 			return this.each(function() {
 				
 				//----------------------------------
-				// Local variable(s):
+				// Declare/initialize:
 				//----------------------------------
 				
 				var $this = $(this),
@@ -678,10 +706,10 @@
 						.on(constants.TYPE + '.' + constants.NS, function(e) {
 							
 							//----------------------------------
-							// Local variable(s):
+							// Declare/initialize:
 							//----------------------------------
 							
-							var $li = $(this).parent('div').parent('li');
+							var $li = $(this).parent('div').parent('li'); // Save a var and move this line to call()?
 							
 							//----------------------------------
 							// Close menu:
@@ -707,7 +735,7 @@
 				data.hrefs.on('mousedown.' + constants.NS + ' mouseup.' + constants.NS + ' focus.' + constants.NS, function(e) { // rgne.ws/O0PD7y
 					
 					//----------------------------------
-					// Local variable(s):
+					// Declare/initialize:
 					//----------------------------------
 					
 					var $this = $(this),
@@ -807,11 +835,12 @@
 					data.hrefs.on(constants.TYPE + '.' + constants.NS, function(e) {
 						
 						//----------------------------------
-						// Local variable(s):
+						// Declare/initialize:
 						//----------------------------------
 						
 						var $this = $(this),
-						    $li   = $this.parent('li');
+						    $li   = $this.parent('li'),
+						    uri;
 						
 						//----------------------------------
 						// A click, but is it first click?
@@ -839,7 +868,7 @@
 							// Get link:
 							//----------------------------------
 							
-							var uri = _getUri.call($this);
+							uri = _getUri.call($this);
 							
 							//----------------------------------
 							// Follow link?
@@ -901,7 +930,7 @@
 					data.lis.on('mouseenter.' + constants.NS + ' mouseleave.' + constants.NS, function(e) {
 						
 						//----------------------------------
-						// Local variable(s):
+						// Declare/initialize:
 						//----------------------------------
 						
 						var $this = $(this);
@@ -982,13 +1011,17 @@
 	
 	_startOutside = function(data) {
 		
-		// Should I check for data before doing anything?
+		//----------------------------------
+		// Declare:
+		//----------------------------------
+		
+		var $doc;
 		
 		//----------------------------------
 		// Check if we're not already setup:
 		//----------------------------------
 		
-		if ( ! data.outside) {
+		if ( ! data.outside) { // Should I check for data before doing anything?
 			
 			//----------------------------------
 			// Switch flag:
@@ -1003,10 +1036,10 @@
 			data.options.onStartOutside.call(data.target); // Best spot for this? What object should I pass?
 			
 			//----------------------------------
-			// Local variable(s):
+			// Cache the document:
 			//----------------------------------
 			
-			var $doc = $(document); // rgne.ws/OvKeU6
+			$doc = $(document); // rgne.ws/OvKeU6
 			
 			//----------------------------------
 			// Detach event handler(s):
@@ -1105,7 +1138,7 @@
 	_getUri = function() {
 		
 		//----------------------------------
-		// Local variable(s):
+		// Declare/initialize:
 		//----------------------------------
 		
 		var uri = this.attr('href'); // Get link from href attribute.
@@ -1177,7 +1210,7 @@
 		return this.each(function() {
 			
 			//----------------------------------
-			// Local variable(s):
+			// Declare/initialize:
 			//----------------------------------
 			
 			var $this = $(this),
@@ -1236,7 +1269,7 @@
 		return this.each(function() {
 			
 			//----------------------------------
-			// Local variable(s):
+			// Declare/initialize:
 			//----------------------------------
 			
 			var $this = $(this),
@@ -1281,16 +1314,6 @@
 	// Default settings:
 	//
 	//--------------------------------------------------------------------------
-	
-	/**
-	 * Settings object.
-	 *
-	 * @type { object }
-	 */
-	
-	var settings = {}; // Initialize config object.
-	
-	//----------------------------------
 	
 	/**
 	 * Private settings.

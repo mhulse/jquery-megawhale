@@ -2,6 +2,8 @@
 
 module.exports = function(grunt) {
 	
+	'use strict';
+	
 	grunt.initConfig({
 		
 		pkg: grunt.file.readJSON('package.json'),
@@ -59,22 +61,15 @@ module.exports = function(grunt) {
 		
 		/**
 		 * @see http://www.jshint.com/docs/
+		 * @see http://www.jshint.com/docs/
+		 * @see https://github.com/jshint/jshint/blob/r12/jshint.js#L256
 		 */
 		
 		jshint: {
 			
 			options: {
 				
-				smarttabs: true,
-				browser: true,
-				quotmark: true,
-				curly: true,
-				
-				globals : {
-					
-					DocumentTouch: true
-					
-				}
+				jshintrc: '.jshintrc'
 				
 			},
 			

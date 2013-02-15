@@ -8,7 +8,7 @@
  * @copyright Copyright (c) 2013 Micky Hulse.
  * @license Released under the Apache License, Version 2.0.
  * @version 1.0.0
- * @date 2013/02/12
+ * @date 2013/02/15
  */
 
 /*
@@ -245,13 +245,15 @@
 **--------------------------------------------------------------------------
 */
 
-@media
+@media /* https://github.com/GoalSmashers/clean-css/issues/66 */
 only screen and (min-width: 990px) and (min--moz-device-pixel-ratio: 1.5),
 only screen and (min-width: 990px) and (-moz-min-device-pixel-ratio: 1.5),
 only screen and (min-width: 990px) and (-o-min-device-pixel-ratio: 3/2),
 only screen and (min-width: 990px) and (-webkit-min-device-pixel-ratio: 1.5),
 only screen and (min-width: 990px) and (min-device-pixel-ratio: 1.5),
 only screen and (min-width: 990px) and (min-resolution: 1.5dppx) {
+	
+	/* @BUG: https://github.com/registerguard/jquery-megakrill/issues/14 */
 	
 	/*
 	**----------------------------------
@@ -267,6 +269,7 @@ only screen and (min-width: 990px) and (min-resolution: 1.5dppx) {
 		-webkit-background-size: 8px 8px;
 		background-size: 8px 8px;
 	}
+		.lt-ie9 .mw-arrow { background-image: url(./images/arrow.gif); }
 	
 	/*
 	**----------------------------------
@@ -282,5 +285,6 @@ only screen and (min-width: 990px) and (min-resolution: 1.5dppx) {
 		-webkit-background-size: 32px 32px;
 		background-size: 32px 32px;
 	}
+		.lt-ie9 .mw-close { background-image: url(./images/close.gif); }
 	
 }

@@ -1,23 +1,24 @@
 # jQuery MegaWhale
+
 ### Like [Superfish](http://users.tpg.com.au/j_birch/plugins/superfish/), but for mega menus!
 
 ---
 
 #### OPTIONS
 		
-* `animIn`: What animation object to use to show the submenus.
-* `animOut`: IBID, but for hiding.
-* `arrow`: Markup to use for sub-menu arrow indicators; set to false to disable this feature.
-* `close`: Markup to use for close buttons when eventType is click or it's a touch device; set to * * `false to disable this feature.
-* `delayIn`: The delay in milliseconds that the mouse can `hover` "inside" the menu before it opens.
-* `delayOut`: The delay in milliseconds that the mouse can `hover` "outside" the menu before it closes.
-* `easeIn`: Easing function in.
-* `easeOut`: Easing function out.
-* `eventOutside`: Detect click outside events?
-* `eventType`: One of `click`, `hover` or `hoverIntent`.
-* `openClass`: Applied to opened `<li>`s.
-* `speedIn`: Animation speed in.
-* `speedOut`: Animation speed out.
+* `animIn`: What animation object to use to show the submenus. Default: `{ opacity: 'show' }`.
+* `animOut`: IBID, but for hiding. Default: `{ opacity: 'hide' }`.
+* `arrow`: Markup to use for sub-menu arrow indicators; set to false to disable this feature. Default: `'<span class="mw-arrow">&#187;</span>'`
+* `close`: Markup to use for sub-menu arrow indicators; set to false to disable this feature. Default: `<span class="mw-close">(X)</span>`.
+* `delayIn`: The delay in milliseconds that the mouse can `hover` "inside" the menu before it opens. Default: `400`.
+* `delayOut`: The delay in milliseconds that the mouse can `hover` "outside" the menu before it closes. Default: `700`.
+* `easeIn`: Easing function in. Default: `swing`.
+* `easeOut`: Easing function out. Default: `swing`.
+* `eventOutside`: Detect click outside events? Default: `true`.
+* `eventType`: One of `click`, `hover` or `hoverIntent`. Default: `hover`.
+* `openClass`: Applied to opened `<li>`s. Default: `mw-open`.
+* `speedIn`: Animation speed in. Default: `normal`.
+* `speedOut`: Animation speed out. Default: `normal`.
 
 **Callbacks:**
 
@@ -30,6 +31,8 @@
 * `onStartOutside`: When outside events start.
 * `onEndOutside`: When outside events end.
 
+---
+
 #### DEMO
 
 Just **MegaKrill**:
@@ -39,6 +42,8 @@ Just **MegaKrill**:
 … and here's a demo using **MegaWhale** and the [jQuery **MegaKrill** plugin](https://github.com/registerguard/jquery-megakrill):
 
 [![qr code](http://chart.apis.google.com/chart?cht=qr&chl=https://github.com/registerguard/jquery-mega-demos/&chs=240x240)](http://registerguard.github.com/jquery-mega-demos/)
+
+Resize the browser window to see the plugin(s) in action (Firefox 15+ users, check out [Responsive Design View](https://developer.mozilla.org/en-US/docs/Tools/Responsive_Design_View)).
 
 ---
 
