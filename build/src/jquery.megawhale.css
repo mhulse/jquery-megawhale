@@ -117,12 +117,12 @@
 				border-width: 0 1px 1px;
 				border-style: solid;
 				border-color: #ccc;
-				-moz-box-shadow: 0 5px 5px 0 rgba(0, 0, 0, .25);
 				-webkit-box-shadow: 0 5px 5px 0 rgba(0, 0, 0, .25);
-				box-shadow: 0 10px 10px 0 rgba(0, 0, 0, .25);
+				   -moz-box-shadow: 0 5px 5px 0 rgba(0, 0, 0, .25);
+				        box-shadow: 0 10px 10px 0 rgba(0, 0, 0, .25);
 				-webkit-border-radius: 0 0 3px 3px;
-				-moz-border-radius: 0 0 3px 3px;
-				border-radius: 0 0 3px 3px;
+				   -moz-border-radius: 0 0 3px 3px;
+				        border-radius: 0 0 3px 3px;
 			}
 	
 	/*
@@ -226,19 +226,19 @@
 /*
 **--------------------------------------------------------------------------
 **
-** Retina display at >= 990 width:
+** Retina display at >= 1005 width:
 ** rgne.ws/M1CLgG
 **
 **--------------------------------------------------------------------------
 */
 
 @media /* https://github.com/GoalSmashers/clean-css/issues/66 */
-only screen and (min-width: 990px) and (min--moz-device-pixel-ratio: 1.5),
-only screen and (min-width: 990px) and (-moz-min-device-pixel-ratio: 1.5),
-only screen and (min-width: 990px) and (-o-min-device-pixel-ratio: 3/2),
-only screen and (min-width: 990px) and (-webkit-min-device-pixel-ratio: 1.5),
-only screen and (min-width: 990px) and (min-device-pixel-ratio: 1.5),
-only screen and (min-width: 990px) and (min-resolution: 1.5dppx) {
+only screen and (min-width: 1005px) and (min--moz-device-pixel-ratio: 1.5),
+only screen and (min-width: 1005px) and (-moz-min-device-pixel-ratio: 1.5),
+only screen and (min-width: 1005px) and (-o-min-device-pixel-ratio: 3/2),
+only screen and (min-width: 1005px) and (-webkit-min-device-pixel-ratio: 1.5),
+only screen and (min-width: 1005px) and (min-device-pixel-ratio: 1.5),
+only screen and (min-width: 1005px) and (min-resolution: 1.5dppx) {
 	
 	/* @BUG: https://github.com/registerguard/jquery-megakrill/issues/14 */
 	
@@ -250,11 +250,11 @@ only screen and (min-width: 990px) and (min-resolution: 1.5dppx) {
 	
 	.mw-arrow {
 		background-image: url(./images/arrow@2x.png);
-		-moz-background-size: 8px 8px;
-		-ie-background-size: 8px 8px;
-		-o-background-size: 8px 8px;
 		-webkit-background-size: 8px 8px;
-		background-size: 8px 8px;
+		   -moz-background-size: 8px 8px;
+		    -ie-background-size: 8px 8px;
+		     -o-background-size: 8px 8px;
+		        background-size: 8px 8px;
 	}
 		.lt-ie9 .mw-arrow { background-image: url(./images/arrow.gif); }
 	
@@ -266,11 +266,11 @@ only screen and (min-width: 990px) and (min-resolution: 1.5dppx) {
 	
 	.mw-close {
 		background-image: url(./images/close@2x.png);
-		-moz-background-size: 32px 32px;
-		-ie-background-size: 32px 32px;
-		-o-background-size: 32px 32px;
 		-webkit-background-size: 32px 32px;
-		background-size: 32px 32px;
+		   -moz-background-size: 32px 32px;
+		    -ie-background-size: 32px 32px;
+		     -o-background-size: 32px 32px;
+		        background-size: 32px 32px;
 	}
 		.lt-ie9 .mw-close { background-image: url(./images/close.gif); }
 	
