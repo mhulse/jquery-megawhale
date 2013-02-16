@@ -35,7 +35,7 @@
 
 #### DEMO
 
-Just **MegaKrill**:
+Just **MegaWhale**:
 
 [![qr code](http://chart.apis.google.com/chart?cht=qr&chl=https://github.com/registerguard/jquery-megawhale/&chs=240x240)](http://registerguard.github.com/jquery-megawhale/demo/)
 
