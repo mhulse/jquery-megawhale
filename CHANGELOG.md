@@ -44,27 +44,19 @@
 ##### Browser tests:
 
 * MAC Snow Leopard:
-	* xFirefox `18.0.2`, xSafari `6.0.2 (8536.26.17)`, xOpera `12.14 (1738)`, xChrome `24.0.1312.57`
+	* Firefox `18.0.2`, Safari `6.0.2 (8536.26.17)`, Opera `12.14 (1738)`, Chrome `24.0.1312.57`
 * PC Windows 7:
-	* xFirefox `18.0.2`
-	* xIE `9.0.8112.16421`
+	* Firefox `18.0.2`
+	* IE `9.0.8112.16421`
 * PC Vista:
-	* xFirefox `3.6.2.8`, xChrome `24.0.1312.57 m`, xSafari `5.1.7 (7534.57.2)`, xOpera `12.14 (1738)`
-	* xIE `7.0.6002.18005`
+	* Firefox `3.6.2.8`, Chrome `24.0.1312.57 m`, Safari `5.1.7 (7534.57.2)`, Opera `12.14 (1738)`
+	* IE `9.0.8112.16421`, IE `7.0.6002.18005`
 * PC XP:
-    * xIE `8.0.6001.18702`, xIE `6.0.2900.5512.xpsp_sp3_gdr.120504-1619`
-* iPhone (Retina 4-inch), iOS `6.1`:
-	* xSafari (simulated)
-* iPhone (Retina 3.5-inch), iOS `6.1`:
-	* xSafari (simulated), xSafari, xChrome `23.0.1271.100`, xOpera Mini `7.0.5.45389`, xDolphin `v7.1`
-* iPhone, iOS `6.1`:
-	* xSafari (simulated)
+    * Firefox `14.0.1`, IE `8.0.6001.18702`, IE `6.0.2900.5512.xpsp_sp3_gdr.120504-1619`
 * iPad (Retina), iOS `6.1`:
-	* xSafari (simulated), xSafari
+	* Safari (simulated), Safari, Chrome `23.0.1271.100`, Dolphin `V6.1`
 * iPad, iOS `6.1`:
-	* xSafari (simulated)
-* Motorola Droid 4, Android 4.0.4
-	* xBrowser, xDolphin 9.3.1
+	* Safari (simulated)
 
 ---
 
