@@ -35,12 +35,18 @@ h1 {
 	padding: 0;
 }
 
-@media only screen and (min-width: 1005px) {
+@media only screen and (min-width: 665px) {
 	
 	.container {
-		width: 980px;
-		margin: 20px auto;
+		width: 640px;
+		margin: 10px auto;
 	}
+	
+}
+
+@media only screen and (min-width: 1005px) {
+	
+	.container { width: 980px; }
 	
 }
 

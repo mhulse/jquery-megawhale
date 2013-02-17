@@ -99,7 +99,12 @@
 				position: relative; /* Needed for IMG arrows. */
 			}
 			.mw-a,
-			.mw-a:visited { color: #fff; }
+			.mw-a:visited,
+			.mw-a:visited:hover,
+			.mw-a:focus,
+			.mw-a:focus:hover,
+			.mw-a:hover,
+			.mw-a:active { color: #fff; } /* rgne.ws/XXNCxL */
 			/* See HTML for related JS: */
 			.no-touch .mw-a:visited:hover,
 			.no-touch .mw-a:focus,
@@ -209,33 +214,6 @@
 	
 }
 
-@media only screen and (min-width: 1345px) {
-	
-	/*
-	**--------------------------------------------------------------------------
-	**
-	** Desktop menu:
-	**
-	**--------------------------------------------------------------------------
-	*/
-	
-	/*
-	**----------------------------------
-	** Dropdown width:
-	**----------------------------------
-	*/
-	
-	/*
-		IBID.
-	*/
-
-	.mw-div {
-		width: 1318.1px; /* IBID. */
-		width: 1318px\9; /* IBID. */
-	}
-	
-}
-
 /*
 **--------------------------------------------------------------------------
 **
@@ -286,5 +264,32 @@ only screen and (min-width: 1005px) and (min-resolution: 1.5dppx) {
 		        background-size: 32px 32px;
 	}
 		.lt-ie9 .mw-close { background-image: url(./images/close.gif); }
+	
+}
+
+@media only screen and (min-width: 1345px) {
+	
+	/*
+	**--------------------------------------------------------------------------
+	**
+	** Desktop menu:
+	**
+	**--------------------------------------------------------------------------
+	*/
+	
+	/*
+	**----------------------------------
+	** Dropdown width:
+	**----------------------------------
+	*/
+	
+	/*
+		IBID.
+	*/
+
+	.mw-div {
+		width: 1318.1px; /* IBID. */
+		width: 1318px\9; /* IBID. */
+	}
 	
 }
