@@ -1,5 +1,7 @@
 # jQuery MegaWhale
 
+![MegaWhale gif demo](megawhale.gif)
+
 ### Like [Superfish](http://users.tpg.com.au/j_birch/plugins/superfish/), but for mega menus!
 
 ---
