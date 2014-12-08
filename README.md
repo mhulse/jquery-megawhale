@@ -39,11 +39,11 @@
 
 Just **MegaWhale**:
 
-[![qr code](http://chart.apis.google.com/chart?cht=qr&chl=https://github.com/registerguard/jquery-megawhale/&chs=240x240)](http://registerguard.github.com/jquery-megawhale/demo/)
+[![qr code](http://chart.apis.google.com/chart?cht=qr&chl=https://github.io/mhulse/jquery-megawhale/&chs=240x240)](http://mhulse.github.io/jquery-megawhale/demo/)
 
-… and here's a demo using **MegaWhale** and the [jQuery **MegaKrill** plugin](https://github.com/registerguard/jquery-megakrill):
+… and here's a demo using **MegaWhale** and the [jQuery **MegaKrill** plugin](https://github.com/mhulse/jquery-megakrill):
 
-[![qr code](http://chart.apis.google.com/chart?cht=qr&chl=https://github.com/registerguard/jquery-mega-demos/&chs=240x240)](http://registerguard.github.com/jquery-mega-demos/)
+[![qr code](http://chart.apis.google.com/chart?cht=qr&chl=https://github.com/mhulse/jquery-mega-demos/&chs=240x240)](http://mhulse.github.io/jquery-mega-demos/)
 
 Resize the browser window to see the plugin(s) in action (Firefox 15+ users, check out [Responsive Design View](https://developer.mozilla.org/en-US/docs/Tools/Responsive_Design_View)).
 
@@ -57,7 +57,7 @@ While I've done my best to make this code as plug-and-play as possible, you'll m
 
 #### LEGAL
 
-Copyright © 2013 [Micky Hulse](http://hulse.me)/[The Register-Guard](http://registerguard.com)
+Copyright © 2013 [Micky Hulse](http://mky.io)
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this work except in compliance with the License. You may obtain a copy of the License in the LICENSE file, or at:
 
