@@ -39,7 +39,7 @@
 
 Just **MegaWhale**:
 
-[![qr code](http://chart.apis.google.com/chart?cht=qr&chl=https://github.io/mhulse/jquery-megawhale/&chs=240x240)](http://mhulse.github.io/jquery-megawhale/demo/)
+[![qr code](http://chart.apis.google.com/chart?cht=qr&chl=https://github.com/mhulse/jquery-megawhale/&chs=240x240)](http://mhulse.github.io/jquery-megawhale/demo/)
 
 … and here's a demo using **MegaWhale** and the [jQuery **MegaKrill** plugin](https://github.com/mhulse/jquery-megakrill):
 
